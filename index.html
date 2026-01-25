@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three.js Projects</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 class="main-heading">Three.js Projects</h1>
+      <p>
+        /* Built by
+        <a href="https://github.com/ayushnagarcodes" target="_blank">Ayush N</a>
+        */
+      </p>
+    </header>
+
+    <main class="projects-grid" id="projects-grid">
+      <!-- Projects will be dynamically inserted here -->
+    </main>
+
+    <script>
+      // Projects config
+      const projects = [
+        {
+          id: "haunted-house",
+          title: "Haunted House",
+          thumbnail: "thumbnails/haunted-house.webp",
+        },
+      ];
+
+      // Render projects grid
+      function renderProjects() {
+        const grid = document.getElementById("projects-grid");
+
+        projects.forEach((project) => {
+          const projectCard = document.createElement("a");
+          projectCard.href = `./projects/${project.id}/`;
+          projectCard.target = "_blank";
+
+          projectCard.innerHTML = `
+                    <article id="${project.id}" class="project-card">
+                        <img src="${project.thumbnail}" alt="${project.title}" title="${project.title}" />
+                    </article>
+                `;
+
+          grid.appendChild(projectCard);
+        });
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", renderProjects);
+    </script>
+  </body>
+</html>
