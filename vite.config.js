@@ -55,7 +55,6 @@ export default {
   publicDir: "./public/", // Public assets
   server: {
     host: true, // Open to local network and display URL
-    open: !("SANDBOX_URL" in process.env || "CODESANDBOX_HOST" in process.env), // Open if it's not a CodeSandbox
   },
   plugins: [
     restart({ restart: ["./public/**", "./src/**"] }), // Restart server on file change
