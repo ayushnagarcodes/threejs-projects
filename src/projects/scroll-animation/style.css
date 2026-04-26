@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background-color: #1e1a20;
+}
+
+section:nth-of-type(2) h2 {
+  position: relative;
+  right: 64px;
+}
+
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  font-family: "Cabin", sans-serif;
+  color: #ffeded;
+  text-transform: uppercase;
+  font-size: 5.5vmin;
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+section:nth-child(odd) {
+  justify-content: flex-end;
+}
