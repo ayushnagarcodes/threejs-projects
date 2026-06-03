@@ -1,8 +1,8 @@
+"use strict";
+
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { Timer } from "three/addons/misc/Timer.js";
-import { Sky } from "three/addons/objects/Sky.js";
-import GUI from "lil-gui";
+import { Sky, OrbitControls } from "three/examples/jsm/Addons.js";
+// import GUI from "lil-gui";
 
 /**
  * Base
@@ -434,7 +434,7 @@ scene.fog = new THREE.FogExp2("#02343f", 0.1);
 /**
  * Animate
  */
-const timer = new Timer();
+const timer = new THREE.Timer();
 
 const tick = () => {
   // Timer
