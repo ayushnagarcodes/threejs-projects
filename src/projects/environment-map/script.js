@@ -1,0 +1,134 @@
+import * as THREE from "three";
+import GUI from "lil-gui";
+import { GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js";
+
+/**
+ * Loaders
+ */
+const gltfLoader = new GLTFLoader();
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+
+/**
+ * Base
+ */
+// Debug
+const gui = new GUI();
+
+// Canvas
+const canvas = document.querySelector("canvas.webgl");
+
+// Scene
+const scene = new THREE.Scene();
+
+/**
+ * Environment map
+ */
+// LDR (low dynamic range) cube texture
+const environmentMap = cubeTextureLoader.load([
+  "./assets/environmentMaps/0/px.png",
+  "./assets/environmentMaps/0/nx.png",
+  "./assets/environmentMaps/0/py.png",
+  "./assets/environmentMaps/0/ny.png",
+  "./assets/environmentMaps/0/pz.png",
+  "./assets/environmentMaps/0/nz.png",
+]);
+
+scene.environment = environmentMap;
+scene.background = environmentMap;
+
+/**
+ * Torus Knot
+ */
+const torusKnot = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.6, 0.4, 100, 16),
+  new THREE.MeshStandardMaterial({
+    roughness: 0.3,
+    metalness: 1,
+    color: 0xaaaaaa,
+  }),
+);
+// torusKnot.material.envMap = environmentMap;
+torusKnot.position.x = -4;
+torusKnot.position.y = 4;
+scene.add(torusKnot);
+
+/**
+ * Models
+ */
+gltfLoader.load(
+  "./assets/models/FlightHelmet/glTF/FlightHelmet.gltf",
+  (gltf) => {
+    gltf.scene.scale.set(6, 6, 6);
+    gltf.scene.position.y = 1.5;
+    scene.add(gltf.scene);
+  },
+);
+
+/**
+ * Sizes
+ */
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
+window.addEventListener("resize", () => {
+  // Update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // Update camera
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+/**
+ * Camera
+ */
+// Base camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100,
+);
+camera.position.set(4, 5, 4);
+scene.add(camera);
+
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.target.y = 3.5;
+controls.enableDamping = true;
+
+/**
+ * Renderer
+ */
+const renderer = new THREE.WebGLRenderer({
+  canvas: canvas,
+});
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/**
+ * Animate
+ */
+const clock = new THREE.Clock();
+const tick = () => {
+  // Time
+  const elapsedTime = clock.getElapsedTime();
+
+  // Update controls
+  controls.update();
+
+  // Render
+  renderer.render(scene, camera);
+
+  // Call tick again on the next frame
+  window.requestAnimationFrame(tick);
+};
+
+tick();
