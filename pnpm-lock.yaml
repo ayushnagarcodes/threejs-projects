@@ -182,6 +182,9 @@ importers:
       vite:
         specifier: ^6.2.2
         version: 6.3.6
+      vite-plugin-glsl:
+        specifier: ^1.6.2
+        version: 1.6.2(esbuild@0.25.10)(vite@6.3.6)
       vite-plugin-restart:
         specifier: ^0.4.2
         version: 0.4.2(vite@6.3.6)
@@ -595,6 +598,19 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
+  vite-plugin-glsl@1.6.2:
+    resolution: {integrity: sha512-/WSsBiKg6HcBXutxtynJ9CBJImv4m6Fa3bAGLCQXeSgboiH1VVjL3ok42MeGIpc4NzOKFa1F0s+09J03M+jepw==}
+    engines: {node: '>= 20.17.0', npm: '>= 10.8.3'}
+    peerDependencies:
+      '@rollup/pluginutils': ^5.x
+      esbuild: '>= 0.25'
+      vite: '>= 3.x'
+    peerDependenciesMeta:
+      '@rollup/pluginutils':
+        optional: true
+      esbuild:
+        optional: true
+
   vite-plugin-restart@0.4.2:
     resolution: {integrity: sha512-9aWN2ScJ8hbT7aC8SDeZnsbWapnslz1vhNq6Vgf2GU9WdN4NExlrWhtnu7pmtOUG3Guj8y6lPcUZ+ls7SVP33w==}
     peerDependencies:
@@ -946,6 +962,12 @@ snapshots:
   to-regex-range@5.0.1:
     dependencies:
       is-number: 7.0.0
+
+  vite-plugin-glsl@1.6.2(esbuild@0.25.10)(vite@6.3.6):
+    dependencies:
+      vite: 6.3.6
+    optionalDependencies:
+      esbuild: 0.25.10
 
   vite-plugin-restart@0.4.2(vite@6.3.6):
     dependencies:

@@ -1,5 +1,6 @@
 import restart from "vite-plugin-restart";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import glsl from "vite-plugin-glsl";
 import { resolve } from "path";
 import { readdirSync, renameSync, rmSync, existsSync, mkdirSync } from "fs";
 
@@ -57,7 +58,7 @@ export default {
     host: true, // Open to local network and display URL
   },
   plugins: [
-    restart({ restart: ["./public/**", "./src/**"] }), // Restart server on file change
+    restart({ restart: ["./public/**"] }),
     viteStaticCopy({
       targets: getAssetCopyTargets(),
     }),
@@ -101,6 +102,7 @@ export default {
         }
       },
     },
+    glsl(),
   ],
   build: {
     outDir: "./dist", // Output in the dist/ folder
