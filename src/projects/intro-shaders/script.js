@@ -27,15 +27,44 @@ const textureLoader = new THREE.TextureLoader();
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
 
+// const count = geometry.attributes.position.count;
+// const randoms = new Float32Array(count);
+
+// for (let i = 0; i < count; i++) {
+//   randoms[i] = Math.random();
+// }
+
+// geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
+
 // Material
 const material = new THREE.RawShaderMaterial({
   vertexShader,
   fragmentShader,
   // wireframe: true,
+  side: THREE.DoubleSide,
+  uniforms: {
+    uFrequency: { value: new THREE.Vector2(10, 5) },
+    uTime: { value: 0 },
+    uColor: { value: new THREE.Color("orange") },
+  },
 });
+
+gui
+  .add(material.uniforms.uFrequency.value, "x")
+  .min(0)
+  .max(20)
+  .step(0.01)
+  .name("frequencyX");
+gui
+  .add(material.uniforms.uFrequency.value, "y")
+  .min(0)
+  .max(20)
+  .step(0.01)
+  .name("frequencyY");
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
+mesh.scale.y = 2 / 3;
 scene.add(mesh);
 
 /**
@@ -70,7 +99,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100,
 );
-camera.position.set(0.25, -0.25, 1);
+camera.position.set(0.25, -0.25, 1.5);
 scene.add(camera);
 
 // Controls
@@ -93,6 +122,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Update uniform sent to the material
+  material.uniforms.uTime.value = elapsedTime;
 
   // Update controls
   controls.update();
